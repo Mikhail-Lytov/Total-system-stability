@@ -13,6 +13,9 @@ T_work = []
 C_work_repair = []
 cost_kilometer = []
 distance_transport = []
+distance_transportation_km = []
+cost_transportation_km = []
+number_transport = []
 
 index_repair_work = 1
 level_repair_work = 1
@@ -27,19 +30,76 @@ level_moving = 1
 
 def moving_next():
     global application_moving
+    global level_moving
     element_cost_kilometer = Entry_cost_kilometer.get()
     element_distance = Entry_cost_distance.get()
+    element_distance_transportation_km  = Entry_distance_transportation_km.get()
+    element_cost_transportation_km = Entry_cost_transportation_km.get()
+    element_number_transport = Entry_number_transport.get()
     try:
         cost_kilometer.append(float(element_cost_kilometer))
         distance_transport.append((float(element_distance)))
+        distance_transportation_km.append(float(element_distance_transportation_km))
+        cost_transportation_km.append(float(element_cost_transportation_km))
+        number_transport.append((float(element_number_transport)))
     except ValueError:
         print('Ошибка ввода в moving next')
     application_moving += 1
     L_frame_moving_cost_kilometer.configure(text='Стоимость 1 км перещения РПМТ\n' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке')
     L_frame_moving_distance.configure(text='Расстояние между РО\n' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке')
+    L_distance_transportation_km.configure(text='Расстояние между РО ' + str(level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(application_moving) + '-й заяке', font=('Helvetica',10),justify='left')
+    L_cost_transportation_km.configure(text='Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(level_moving) +'-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica',10),justify='left')
+    L_number_transport.configure(text='количество образцов средств АТО,\nнаправляемых для ремонта в РПСТ\nРО ' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica',10),justify='left')
 
 def entr_moving():
-    pass
+    global application_moving
+    global level_moving
+    global cost_kilometer
+    global distance_transport
+    global distance_transportation_km
+    global cost_transportation_km
+    global number_transport
+    element_cost_kilometer = Entry_cost_kilometer.get()
+    element_distance = Entry_cost_distance.get()
+    element_distance_transportation_km = Entry_distance_transportation_km.get()
+    element_cost_transportation_km = Entry_cost_transportation_km.get()
+    element_number_transport = Entry_number_transport.get()
+    try:
+        cost_kilometer.append(float(element_cost_kilometer))
+        distance_transport.append((float(element_distance)))
+        distance_transportation_km.append(float(element_distance_transportation_km))
+        cost_transportation_km.append(float(element_cost_transportation_km))
+        number_transport.append((float(element_number_transport)))
+    except ValueError:
+        print('Ошибка ввода в moving next')
+
+    calculation.add_km_travel(cost_kilometer)
+    calculation.add_distance(distance_transport)
+    calculation.add_distance_transportation(distance_transportation_km)
+    calculation.add_cost_km_transpot(cost_transportation_km)
+    calculation.add_number_samples_funds(number_transport)
+    level_moving += 1
+
+    L_frame_moving_cost_kilometer.configure(
+        text='Стоимость 1 км перещения РПМТ\n' + str(level_moving) + '-го уровня по ' + str(
+            application_moving) + '-й заявке')
+    L_frame_moving_distance.configure(
+        text='Расстояние между РО\n' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке')
+    L_distance_transportation_km.configure(
+        text='Расстояние между РО ' + str(level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(
+            application_moving) + '-й заяке', font=('Helvetica', 10), justify='left')
+    L_cost_transportation_km.configure(
+        text='Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(
+            level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica', 10),
+        justify='left')
+    L_number_transport.configure(text='количество образцов средств АТО,\nнаправляемых для ремонта в РПСТ\nРО ' + str(
+        level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica', 10),
+                                 justify='left')
+    cost_kilometer = []
+    distance_transport = []
+    distance_transportation_km = []
+    cost_transportation_km = []
+    number_transport = []
 
 
 def entr_frame_belt_work():
