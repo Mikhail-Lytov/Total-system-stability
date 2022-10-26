@@ -56,16 +56,19 @@ def add_km_travel(element):
 def add_hour_operation(operation):  ## самому писать какой элемент ввести
     global hour_operation
     hour_operation.append(operation)
+    print(hour_operation)
 
 
 def add_T_work(operation):
     global T_work
     T_work.append(operation)
+    print(T_work)
 
 
-def B_RP(operation):
+def add_B_RP(operation):
     global B
     B.append(operation)
+    print(B)
 
 
 # add 2.5.2
