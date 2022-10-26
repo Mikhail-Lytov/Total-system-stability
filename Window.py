@@ -119,10 +119,8 @@ frame_repair_tools = tk.Frame(window,width=300,height=75,bg='black')
 frame_repair_tools.place(relx=0.45,rely=0.18,relwidth=0.55,relheight=0.22)
 '''
 frame_moving = tk.Frame(window, width=225, height=150, bg='blue')
-frame_moving.place(relx=0, rely=0.27, relwidth=0.5, relheight=0.53)
+frame_moving.place(relx=0, rely=0.27, relwidth=0.5, relheight=0.8)
 
-frame_transportation = tk.Frame(window, width=225, height=75, bg='white')
-frame_transportation.place(relx=0, rely=0.53, relwidth=0.5, relheight=0.8)
 
 frane_forming = tk.Frame(window, width=225, height=150, bg='green')
 frane_forming.place(relx=0.5, rely=0.27, relwidth=0.5, relheight=0.6)
@@ -163,23 +161,38 @@ button_frame_belt_work.grid(row='2', column='1', sticky='e', padx=10, pady=5)
 
 ## стоимость транспортировки 2.5.4
 
-##2.5.5
+##2.5.5 + 2.5.6
 
 L_frame_moving_cost_kilometer = tk.Label(frame_moving,text='Стоимость 1 км перещения РПМТ\n' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica',10),justify='left')
-L_frame_moving_distance = tk.Label(frame_moving,text='Расстояние между РО\n' + str(level_moving) + '-го уровня по ' + str(application_moving) + '-й заявке',font=('Helvetica',10))
+L_frame_moving_distance = tk.Label(frame_moving,text='Расстояние между РО ' + str(level_moving) + '-го уровня,\nпройденное РПМТ в ходе выполнения\nремонта в полевых условиях по\n' + str(application_moving) + '-й заявке',font=('Helvetica',10),justify='left')
+L_distance_transportation_km = ttk.Label(frame_moving, text='Расстояние между РО ' + str(level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(application_moving) + '-й заяке', font=('Helvetica',10),justify='left')
+L_cost_transportation_km = ttk.Label(frame_moving,text='Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(level_moving) +'-го уровня по ' + str(application_moving) + '-й заявке', font=('Helvetica',10),justify='left')
+L_number_transport = ttk.Label(frame_moving, text='количество образцов средств АТО,\nнаправляемых для ремонта в РПСТ\nРО ' + str(level_moving) + '-го уровня по' + str(application_moving) + '-й заявке', font=('Helvetica',10),justify='left')
 
-
-L_frame_moving_cost_kilometer.grid(row='2',column='0',sticky='w',padx=10,pady=3)
-L_frame_moving_distance.grid(row='3',column='0',sticky='w',padx=10,pady=3)
+L_frame_moving_cost_kilometer.grid(row='0',column='0',sticky='w',padx=10,pady=3)
+L_frame_moving_distance.grid(row='1',column='0',sticky='w',padx=10,pady=3)
+L_distance_transportation_km.grid(row='2',column='0',sticky='w',padx=10,pady=3)
+L_cost_transportation_km.grid(row='3',column='0',sticky='w',padx=10,pady=3)
+L_number_transport.grid(row='4',column='0',sticky='w',padx=10,pady=3)
 
 Entry_cost_kilometer = ttk.Entry(frame_moving,justify=tk.RIGHT, width=10)
-Entry_cost_kilometer.grid(row='2',column='1',sticky='e',pady=3)
+Entry_cost_kilometer.grid(row='0',column='1',sticky='e',pady=3)
 
 Entry_cost_distance = ttk.Entry(frame_moving,justify=tk.RIGHT,width=10)
-Entry_cost_distance.grid(row='3',column='1',sticky='e',pady=3)
+Entry_cost_distance.grid(row='1',column='1',sticky='e',pady=3)
+
+Entry_distance_transportation_km = ttk.Entry(frame_moving,justify=tk.RIGHT,width=10)
+Entry_cost_transportation_km = ttk.Entry(frame_moving,justify=tk.RIGHT,width=10)
+Entry_number_transport  = ttk.Entry(frame_moving,justify=tk.RIGHT,width=10)
+
+Entry_distance_transportation_km.grid(row='2',column='1',sticky='e',padx=10,pady=3)
+Entry_cost_transportation_km.grid(row='3',column='1',sticky='e',padx=10,pady=3)
+Entry_number_transport.grid(row='4',column='1',sticky='e',padx=10,pady=3)
 button_frame_moving_enter = ttk.Button(frame_moving,text='Следующий уровень\n(ввести уровень)', command=entr_moving)
-button_frame_moving_enter.grid(row='4',column='0',sticky='w',pady=3,padx=10)
+button_frame_moving_enter.grid(row='5',column='0',sticky='w',pady=3,padx=10)
 
 button_frame_moving_next = ttk.Button(frame_moving,text='следующая заявка', command=moving_next)
-button_frame_moving_next.grid(row='4',column='1',sticky='e', pady=3)
+button_frame_moving_next.grid(row='5',column='1',sticky='e', pady=3)
+
+#2.5.6
 window.mainloop()
