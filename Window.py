@@ -200,10 +200,10 @@ class FrameForming(tk.Frame):
         self.button_frame_forming_next.grid(row='4', column='1', sticky='w', padx=10, pady=3)
 
     def forming_next(self):
-        element_number_repair_tools = Enter_number_repair_tools.get()
-        element_cost_repair_facilities = Enter_cost_repair_facilities.get()
-        element_number_repairmen = Enter_number_repairmen.get()
-        element_cost_preparation = Enter_cost_preparation.get()
+        element_number_repair_tools = self.Enter_number_repair_tools.get()
+        element_cost_repair_facilities = self.Enter_cost_repair_facilities.get()
+        element_number_repairmen = self.Enter_number_repairmen.get()
+        element_cost_preparation = self.Enter_cost_preparation.get()
 
         try:
             self.number_repair_tools.append(float(element_number_repair_tools))
@@ -459,8 +459,8 @@ class FrameBeltWork(tk.Frame):
 
     def entr_frame_belt_work(self):
 
-        element_T_work = Entry_belt_work_T.get()
-        element_C_repair = Entry_belt_work_C_repair.get()
+        element_T_work = self.Entry_belt_work_T.get()
+        element_C_repair = self.Entry_belt_work_C_repair.get()
         if self.index_repair_work == 1:
             print(self.T_work)
             try:
