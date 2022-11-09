@@ -1,19 +1,25 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, BOTH, END
 import calculation
 
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("calculation")
+        self.title("расчёт")
         self['background'] = '#EBEBEB'
         self.conf = {'padx': (10, 30), 'pady': 10}
         self.bold_font = 'Helvetica 13 bold'
         self.put_frames()
         self.geometry('860x640')
         self.minsize(300, 300)
-
+    def refresh(self):
+        all_frames = [f for f in self.children]
+        for f_name in all_frames:
+            if '!frameconsol' in f_name:
+                self.nametowidget(f_name).destroy()
+        #self.put_frames()
+        self.frame_consol = FrameConsol(self).place(relx=0, rely=0.8, relwidth=1, relheight=0.2)
     def put_frames(self):
         # self.add_form_frame = AddForm(self).grid
         self.frameB = Frame_b(self).place(relx=0, rely=0, relwidth=0.45, relheight=0.18)
@@ -37,14 +43,39 @@ class FrameConsol(tk.Frame):
         self.put_widgets()
 
     def put_widgets(self):
-        self.button_result = ttk.Button(self, text='результат', command=self.result_enter)
-        self.button_result.grid(row='0', column='0')
+        #self.button_result = ttk.Button(self, text='результат', command=self.result_enter)
+        #self.button_result.grid(row='0', column='0')
+        columns = ['type', 'coll']
+        # Тут будет таблица с данными из калькулятор с добавленными элементами из данной таблицы
+        #блица будет обновляемая
+        tree = ttk.Treeview(self, columns = columns, show='headings')
 
-    def result_enter(self):
-        result = calculation.calculation()
-        self.L_result = ttk.Label(self, text=str(result))
-        self.L_result.grid(row='1', column='0')
-        print(result)
+        #tree.grid(row='0', column='0')
+        tree.heading('type', text='Тип', anchor='center')
+        tree.heading('coll',text = 'Данные', anchor='center')
+        tree.insert('', END,values=['hour_operation', calculation.hour_operation])
+        tree.insert('', END, values=['B', calculation.B])
+        tree.insert('', END, values=['T_work', calculation.T_work])
+        tree.insert('', END, values=['number_repair_tools', calculation.number_repair_tools])
+        tree.insert('', END, values=['cost_repair_tools', calculation.cost_repair_tools])
+        tree.insert('', END, values=['number_repairmen', calculation.number_repairmen])
+        tree.insert('', END, values=['cost_repairmen', calculation.cost_repairmen])
+        tree.insert('', END, values=['number_repair_and_evacuation_facilities', calculation.number_repair_and_evacuation_facilities])
+        tree.insert('', END, values=['cost_and_evacuation_facilities', calculation.cost_and_evacuation_facilities])
+        tree.insert('', END, values=['cost_km_travel', calculation.cost_km_travel])
+        tree.insert('', END, values=['distance_travel', calculation.distance_travel])
+        tree.insert('', END, values=['cost_km_transpot', calculation.cost_km_transpot])
+        tree.insert('', END, values=['distance_transportation', calculation.distance_transportation])
+        tree.insert('', END, values=['number_samples_funds', calculation.number_samples_funds])
+        scroll = ttk.Scrollbar(self, command=tree.yview)
+        tree.configure(yscrollcommand=scroll.set)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        tree.pack(expand=tk.YES, fill=tk.BOTH)
+    #def result_enter(self):
+    #    result = calculation.calculation()
+    #    self.L_result = ttk.Label(self, text=str(result))
+    #   self.L_result.grid(row='1', column='0')
+    #    print(result)
 
 
 class FrameRepairEvacuation(tk.Frame):
@@ -337,6 +368,16 @@ class FrameMoving(tk.Frame):
         self.button_frame_moving_next = ttk.Button(self, text='следующая заявка', command=self.moving_next)
         self.button_frame_moving_next.grid(row='5', column='1', sticky='e', pady=3)
 
+        self.button_result = ttk.Button(self, text='посчитать результат', command=self.result_enter)
+        self.button_result.grid(row='6', column='0', padx=30, pady=20)
+
+    def result_enter(self):
+        self.result = calculation.calculation()
+        self.L_result = ttk.Label(self, text=str(self.result))
+        self.L_result.grid(row='7', column='0')
+        print(self.result)
+        result_class = Popup(self, self.result)
+
     def moving_next(self):
         element_cost_kilometer = self.Entry_cost_kilometer.get()
         element_distance = self.Entry_cost_distance.get()
@@ -503,12 +544,18 @@ class Frame_b(tk.Frame):
         self.L_B = tk.Label(self, text='B_РП ' + str(self.level_V) + '-уровня ' + str(self.index_V) + '-го типа')
         self.L_B.grid(row='0', column='0', sticky='w', cnf=self.master.conf)
 
-        self.L_frame_B_B_enter = ttk.Entry(self, justify=tk.RIGHT, width=16)
+        self.L_frame_B_B_enter = ttk.Entry(self, justify=tk.RIGHT, width=16, validate='key', validatecommand=(self.register(self.validate_comand), '%P'))
         self.L_frame_B_B_enter.grid(row='0', column='1', sticky='e', cnf=self.master.conf)
 
         self.enter_frame_B = ttk.Button(self, text='Ввести', command=self.entr_frame_B)  ## потом допишу ввод
         self.enter_frame_B.grid(row='2', column='1', sticky='e', cnf=self.master.conf)
 
+    def validate_comand(self, input):
+        try:
+            x = float(input)
+            return True
+        except ValueError:
+            return False
     def entr_frame_B(self):
         result = self.L_frame_B_B_enter.get()
         if self.index_V == 1:
@@ -527,7 +574,18 @@ class Frame_b(tk.Frame):
             self.index_V = 1
             self.level_V += 1
         self.L_B.configure(text='B ' + str(self.level_V) + '-уровня ' + str(self.index_V) + '-го типа')
+        self.master.refresh()
 
+class Popup:
+    def __init__(self, master, result):
+        self.master = master
+        pop = tk.Toplevel(master)
+        lb = tk.Label(pop, text=result, font='100')
+        lb.pack(pady=50,padx=50, expand=True)
 
-app = App()
-app.mainloop()
+def start():
+    app = App()
+    app.mainloop()
+
+if __name__ == '__main__':
+    start()

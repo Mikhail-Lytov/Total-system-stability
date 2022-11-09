@@ -7,7 +7,8 @@ import tkinter as tk
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('main')
+        self.title('методика формирования стоимостных зависимостей на создание и функционирование системы войскового '
+                   'ремонта средств аэродромно-технического обеспечения')
         self['background'] = '#EBEBEB'
         self.conf = {'padx': (10, 30), 'pady': 10}
         self.bold_font = 'Helvetica 13 bold'
@@ -19,13 +20,14 @@ class App(tk.Tk):
 
     def put_frames(self):
         self.airplane = Frame_Airplane(self).place(relx=0, rely=0, relwidth=1, relheight=0.3)
-        self.start = Frame_Start(self).place(relx=0, rely=0.3,relwidth=1,relheight=0.6)
-        self.name_author = Frame_Auther(self).place(relx=0, rely=0.6, relwidth=1, relheight=1)
+        self.start = Frame_Start(self).place(relx=0, rely=0.3,relwidth=1,relheight=0.64)
+        self.name_author = Frame_Auther(self).place(relx=0, rely=0.64, relwidth=1, relheight=1)
 class Frame_Airplane(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
         self['background'] = self.master['background']
         self.put_widgets()
+        self.configure(bg='white')
         #self.drive()
 
     def put_widgets(self):
@@ -51,12 +53,15 @@ class Frame_Start(tk.Frame):
         super().__init__(parent)
         self['background'] = self.master['background']
         self.put_widgets()
+        self.configure(bg='blue')
 
     def put_widgets(self):
         self.entry = tk.Button(self,text = 'приступить к расчёту', command=self.start)
         self.entry.grid(row=1, column=1, padx=120, pady=30)
     def start(self):
+        self.master.destroy()
         window_calculation.start()
+
 
 
 
@@ -66,6 +71,7 @@ class Frame_Auther(tk.Frame):
         super().__init__(parent)
         self['background'] = self.master['background']
         self.put_widgets()
+        self.configure(bg='red')
     def put_widgets(self):
         self.PAC_L = tk.Label(self, text = "Управления ПАК СУ")
         self.BBC = tk.Label(self,text='ВВС ЦНИИ ВВС')
