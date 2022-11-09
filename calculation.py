@@ -1,19 +1,19 @@
 # from Error_Len_Object_C import Error_Len_Object_C
 
-hour_operation = [[1, 2], [5, 6], [1, 10]]  # средняя стоимость часа функционирования
-T_work = [[2, 1], [7, 9], [10, 2]]  # Т_Рем
-B = [[3, 4], [3, 2], [3, 2]]
-number_repair_tools = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]   # Ncp
-cost_repair_tools = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]  # Cpr
-number_repairmen = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]   # NРП
-cost_repairmen = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]  # Cрп
-number_repair_and_evacuation_facilities = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]  # Фuh
-cost_and_evacuation_facilities = [[[1, 2], [1, 3]], [[1, 4], [1, 5]], [[1, 6], [1, 7]]]  # Cфиh
-cost_km_travel = [[7, 8, 9, 0], [1, 2, 3, 4]]  # стоимотсь одного километра перемещния РПМТ
-distance_travel = [[1, 2, 3, 4], [3, 4, 5, 6]]  # Расстроянеи между PO уровня, пройденное РПМТ
-cost_km_transpot = [[7, 8, 9, 0], [1, 2, 3, 4]]  # стоимоть одного км транспортировки
-distance_transportation = [[1, 2, 3, 4], [3, 4, 5, 6]]  # Расстояние между РО
-number_samples_funds = [[1, 2, 3, 4], [3, 4, 5, 6]]  # количество образцов средств
+hour_operation = []  # средняя стоимость часа функционирования
+T_work = []  # Т_Рем
+B = []
+number_repair_tools = []   # Ncp
+cost_repair_tools = []  # Cpr
+number_repairmen = []   # NРП
+cost_repairmen = []  # Cрп
+number_repair_and_evacuation_facilities = []  # Фuh
+cost_and_evacuation_facilities = []  # Cфиh
+cost_km_travel = []  # стоимотсь одного километра перемещния РПМТ
+distance_travel = []  # Расстроянеи между PO уровня, пройденное РПМТ
+cost_km_transpot = []  # стоимоть одного км транспортировки
+distance_transportation = []  # Расстояние между РО
+number_samples_funds = []  # количество образцов средств
 
 
 # 2.5.4

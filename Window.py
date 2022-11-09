@@ -125,8 +125,8 @@ class FrameRepairEvacuation(tk.Frame):
         element_number_repair_evacuation = self.Enter_number_repair_evacuation.get()
         element_cost_repair_evacuation = self.Enter_cost_repair_evacuation.get()
         try:
-            self.number_repair_evacuation.append(element_number_repair_evacuation)
-            self.cost_repair_evacuation.append(element_cost_repair_evacuation)
+            self.number_repair_evacuation.append(float(element_number_repair_evacuation))
+            self.cost_repair_evacuation.append(float(element_cost_repair_evacuation))
         except ValueError:
             print('error repair_evacuation_next')
 
@@ -150,14 +150,15 @@ class FrameRepairEvacuation(tk.Frame):
             text='Количество ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа в РО\n' + str(
                 self.level_repair_evacuation) + '-го уровня')
         self.L_cost_repair_evacuation.configure(text='Стоимость ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа')
+        self.master.refresh()
 
     def evacuation_next(self):
 
         element_number_repair_evacuation = self.Enter_number_repair_evacuation.get()
         element_cost_repair_evacuation = self.Enter_cost_repair_evacuation.get()
         try:
-            self.number_repair_evacuation.append(element_number_repair_evacuation)
-            self.cost_repair_evacuation.append(element_cost_repair_evacuation)
+            self.number_repair_evacuation.append(float(element_number_repair_evacuation))
+            self.cost_repair_evacuation.append(float(element_cost_repair_evacuation))
         except ValueError:
             print('error repair_evacuation_next')
 
@@ -268,7 +269,7 @@ class FrameForming(tk.Frame):
             self.cost_preparation.append(float(element_cost_preparation))
             self.number_repairmen_v.append(self.number_repairmen)
             self.cost_repair_facilities_v.append(self.cost_repair_facilities)
-            self.number_repairmen_v.append(self.number_repairmen)
+            self.number_repair_tools_v.append(self.number_repair_tools)
             self.cost_preparation_v.append(self.cost_preparation)
         except ValueError:
             print('ошибка forming_enter')
@@ -277,10 +278,11 @@ class FrameForming(tk.Frame):
         elif self.type_V_frane_forming == 2:
             self.type_V_frane_forming = 1
             self.level_frane_forming += 1
-            self.calculation.add_number_repair_tools(self.number_repair_tools_v)
-            self.calculation.add_cost_repair_tools(self.cost_repair_facilities_v)
-            self.calculation.add_number_repairmen(self.number_repairmen_v)
-            self.calculation.add_cost_repairmen(self.cost_preparation_v)
+            print(self.number_repair_tools_v)
+            calculation.add_number_repair_tools(self.number_repair_tools_v)
+            calculation.add_cost_repair_tools(self.cost_repair_facilities_v)
+            calculation.add_number_repairmen(self.number_repairmen_v)
+            calculation.add_cost_repairmen(self.cost_preparation_v)
             self.number_repair_tools_v = []
             self.cost_repair_facilities_v = []
             self.number_repairmen_v = []
@@ -302,6 +304,7 @@ class FrameForming(tk.Frame):
         self.L_cost_preparation.configure(text='усреднённая стоимость подготовки\nспециалиста-ремонтника\n' + str(
             self.type_V_frane_forming) + '-го типа ' + str(
             self.level_frane_forming) + '-го уровня подчинения')
+        self.master.refresh()
 
 
 class FrameMoving(tk.Frame):
@@ -404,7 +407,7 @@ class FrameMoving(tk.Frame):
                 self.level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(
                 self.application_moving) + '-й заяке', font=('Helvetica', 10), justify='left')
         self.L_cost_transportation_km.configure(
-            text='Стоимость одного км транспортироforming_enterвки\nобразца средства АТО в РПСТ РО\n' + str(
+            text='Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(
                 self.level_moving) + '-го уровня по ' + str(self.application_moving) + '-й заявке',
             font=('Helvetica', 10),
             justify='left')
@@ -461,6 +464,7 @@ class FrameMoving(tk.Frame):
         self.distance_transportation_km = []
         self.cost_transportation_km = []
         self.number_transport = []
+        self.master.refresh()
 
 
 class FrameBeltWork(tk.Frame):
@@ -527,8 +531,8 @@ class FrameBeltWork(tk.Frame):
                  ' ' + str(self.index_repair_work) + '-го типа')
         self.L_frame_belt_work_T.configure(
             text='T_рем ' + str(self.level_repair_work) + '-уровня ' + str(self.index_repair_work) + ''
-                                                                                                     '-го типа')
-
+                                                                                                             '-го типа')
+        self.master.refresh()
 
 class Frame_b(tk.Frame):
     B = []
