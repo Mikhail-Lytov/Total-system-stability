@@ -130,7 +130,7 @@ def cost_performance():
         return result
 
     else:
-        print('пиздец')
+        pass
 
 
 def cost_transportation():

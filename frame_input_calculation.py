@@ -11,13 +11,65 @@ import os.path
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPalette, QBrush, QPixmap
 
+import calculation
+
+
 
 class Ui_frame_input(object):
+    B = []
+    level_V_frame_B = 1
+    index_V_frame_B = 1
+
+    application_moving_distance = 1
+    level_moving_distance = 1
+
+    index_repair_work_frame_beltwork = 1
+    level_repair_work_frame_beltwork = 1
+    T_work = []
+    C_work_repair = []
+
+    application_moving = 1
+    level_moving = 1
+    cost_kilometer = []
+    distance_transport = []
+    distance_transportation_km = []
+    cost_transportation_km = []
+    number_transport = []
+
+    number_repair_tools_v = []
+    cost_repair_facilities_v = []
+    number_repairmen_v = []
+    cost_preparation_v = []
+
+    number_repair_tools = []
+    cost_repair_facilities = []
+    number_repairmen = []
+    cost_preparation = []
+
+    type_RP_frane_forming = 1
+    type_V_frane_forming = 1
+    level_frane_forming = 1
+
+    number_repair_evacuation = []
+    cost_repair_evacuation = []
+
+    number_repair_evacuation_v = []
+    cost_repair_evacuation_v = []
+    tool = 2
+    level_repair_evacuation = 1
+    type_repair_evacuation = 1
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(468, 640)
+        MainWindow.resize(1600, 870)
+        MainWindow.setMinimumSize(QtCore.QSize(1600, 870))
+        MainWindow.setMaximumSize(QtCore.QSize(1600, 870))
+        MainWindow.setStyleSheet("font: 12pt \"Mongolian Baiti\";")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setStyleSheet("")
         self.centralwidget.setObjectName("centralwidget")
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
         self.toolBox = QtWidgets.QToolBox(self.centralwidget)
@@ -54,11 +106,13 @@ class Ui_frame_input(object):
         self.L_B.setObjectName("L_B")
         self.horizontalLayout.addWidget(self.L_B)
         self.frame_B_B_enter = QtWidgets.QLineEdit(self.frameB)
-        self.frame_B_B_enter.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop|QtCore.Qt.AlignTrailing)
+        #self.frame_B_B_enter.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTop|QtCore.Qt.AlignTrailing)
         self.frame_B_B_enter.setObjectName("frame_B_B_enter")
+
         self.horizontalLayout.addWidget(self.frame_B_B_enter)
         self.enter_frame_B = QtWidgets.QPushButton(self.frameB)
         self.enter_frame_B.setObjectName("enter_frame_B")
+        self.enter_frame_B.clicked.connect(lambda: self.entr_frame_B())
         self.horizontalLayout.addWidget(self.enter_frame_B)
         self.verticalLayout_5.addWidget(self.frameB)
         self.frame_2 = QtWidgets.QFrame(self.page_B)
@@ -140,9 +194,11 @@ class Ui_frame_input(object):
         self.button_frame_forming_enter = QtWidgets.QPushButton(self.button_frame_forming)
         self.button_frame_forming_enter.setObjectName("button_frame_forming_enter")
         self.horizontalLayout_2.addWidget(self.button_frame_forming_enter)
+        self.button_frame_forming_enter.clicked.connect(lambda: self.enter_frame_forming())
         self.button_frame_forming_next = QtWidgets.QPushButton(self.button_frame_forming)
         self.button_frame_forming_next.setObjectName("button_frame_forming_next")
         self.horizontalLayout_2.addWidget(self.button_frame_forming_next)
+        self.button_frame_forming_next.clicked.connect(lambda: self.next_frame_forming())
         self.verticalLayout.addWidget(self.button_frame_forming)
         self.verticalLayout_4.addWidget(self.FrameForming)
         self.toolBox_2.addItem(self.page_Forming, "")
@@ -189,9 +245,9 @@ class Ui_frame_input(object):
         self.L_cost_repair_evacuation = QtWidgets.QLabel(self.frame_cost_repair_evacuation)
         self.L_cost_repair_evacuation.setObjectName("L_cost_repair_evacuation")
         self.horizontalLayout_7.addWidget(self.L_cost_repair_evacuation)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.frame_cost_repair_evacuation)
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.horizontalLayout_7.addWidget(self.lineEdit_6)
+        self.Enter_cost_repair_evacuation = QtWidgets.QLineEdit(self.frame_cost_repair_evacuation)
+        self.Enter_cost_repair_evacuation.setObjectName("Enter_cost_repair_evacuation")
+        self.horizontalLayout_7.addWidget(self.Enter_cost_repair_evacuation)
         self.verticalLayout_7.addWidget(self.frame_cost_repair_evacuation)
         self.verticalLayout_6.addWidget(self.frame_8)
         self.frame_enter_repair_evacuation = QtWidgets.QFrame(self.page_repair_evacuation)
@@ -203,10 +259,12 @@ class Ui_frame_input(object):
         self.Enter_number_repair_evacuation_2 = QtWidgets.QPushButton(self.frame_enter_repair_evacuation)
         self.Enter_number_repair_evacuation_2.setObjectName("Enter_number_repair_evacuation_2")
         self.horizontalLayout_8.addWidget(self.Enter_number_repair_evacuation_2)
+        self.Enter_number_repair_evacuation_2.clicked.connect(lambda: self.evacuation_enter() )
         self.button_evacuation_next = QtWidgets.QPushButton(self.frame_enter_repair_evacuation)
         self.button_evacuation_next.setObjectName("button_evacuation_next")
         self.horizontalLayout_8.addWidget(self.button_evacuation_next)
         self.verticalLayout_6.addWidget(self.frame_enter_repair_evacuation)
+        self.button_evacuation_next.clicked.connect(lambda: self.evacuation_next())
         self.toolBox_2.addItem(self.page_repair_evacuation, "")
         self.verticalLayout_3.addWidget(self.toolBox_2)
         self.verticalLayout_2.addWidget(self.frame_cost_forming)
@@ -257,6 +315,7 @@ class Ui_frame_input(object):
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
         self.button_frame_belt_work = QtWidgets.QPushButton(self.frame_button_frame_belt_work)
         self.button_frame_belt_work.setObjectName("button_frame_belt_work")
+        self.button_frame_belt_work.clicked.connect(lambda: self.Belt_Work())
         self.horizontalLayout_9.addWidget(self.button_frame_belt_work)
         self.verticalLayout_9.addWidget(self.frame_button_frame_belt_work)
         self.verticalLayout_8.addWidget(self.frame_belt_work)
@@ -315,9 +374,11 @@ class Ui_frame_input(object):
         self.button_moving_enter = QtWidgets.QPushButton(self.frame_button_distance)
         self.button_moving_enter.setObjectName("button_moving_enter")
         self.horizontalLayout_13.addWidget(self.button_moving_enter)
+        self.button_moving_enter.clicked.connect(lambda: self.cost_kilometer_enter())
         self.button_moving_next = QtWidgets.QPushButton(self.frame_button_distance)
         self.button_moving_next.setObjectName("button_moving_next")
         self.horizontalLayout_13.addWidget(self.button_moving_next)
+        self.button_moving_next.clicked.connect(lambda: self.moving_next_clcik())
         self.verticalLayout_12.addWidget(self.frame_button_distance)
         self.qtool_box_2.addItem(self.page_distance_2, "")
         self.page_transportation = QtWidgets.QWidget()
@@ -381,6 +442,7 @@ class Ui_frame_input(object):
         self.horizontalLayout_16.addWidget(self.button_frame_moving_enter)
         self.button_frame_moving_next = QtWidgets.QPushButton(self.frame_button_transport)
         self.button_frame_moving_next.setObjectName("button_frame_moving_next")
+        self.button_frame_moving_next.clicked.connect(lambda: self.moving_next())
         self.horizontalLayout_16.addWidget(self.button_frame_moving_next)
         self.verticalLayout_14.addWidget(self.frame_button_transport)
         self.verticalLayout_13.addWidget(self.frame_transport)
@@ -388,7 +450,24 @@ class Ui_frame_input(object):
         self.verticalLayout_11.addWidget(self.qtool_box_2)
         self.verticalLayout_10.addWidget(self.frame_cost_transportation)
         self.toolBox.addItem(self.page_cost_transportation, "")
+
         self.gridLayout.addWidget(self.toolBox, 0, 0, 1, 1)
+        self.result = QtWidgets.QWidget()
+        self.result.setGeometry(QtCore.QRect(0, 0, 1588, 713))
+        self.result.setObjectName("result")
+        self.verticalLayout_16 = QtWidgets.QVBoxLayout(self.result)
+        self.verticalLayout_16.setObjectName("verticalLayout_16")
+        self.label = QtWidgets.QLabel(self.result)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout_16.addWidget(self.label)
+        self.result_calculation = QtWidgets.QPushButton(self.result)
+        self.result_calculation.setObjectName("result_calculation")
+        self.verticalLayout_16.addWidget(self.result_calculation)
+        self.result_calculation.clicked.connect(lambda: self.result_calculation_enter())
+        self.toolBox.addItem(self.result, "")
+        self.verticalLayout_15.addWidget(self.toolBox)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 468, 18))
@@ -399,7 +478,7 @@ class Ui_frame_input(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.toolBox.setCurrentIndex(2)
+        self.toolBox.setCurrentIndex(0)
         self.toolBox_2.setCurrentIndex(2)
         self.qtool_box_2.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -409,7 +488,7 @@ class Ui_frame_input(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.L_B.setText(_translate("MainWindow", "B_РП 1-го уровня 1-го типа"))
         self.enter_frame_B.setText(_translate("MainWindow", "Ввести"))
-        self.toolBox_2.setItemText(self.toolBox_2.indexOf(self.page_B), _translate("MainWindow", "B"))
+        self.toolBox_2.setItemText(self.toolBox_2.indexOf(self.page_B), _translate("MainWindow", '"B"'))
         self.L_number_repair_tools.setText(_translate("MainWindow", "количество средств ремонта 1-го типа\n"
 "в РП 1-го типа 1-го уровня подчинения"))
         self.L_cost_repair_facilities.setText(_translate("MainWindow", "стоимость средств ремонта 1-го типа\n"
@@ -420,23 +499,24 @@ class Ui_frame_input(object):
 "специалиста-ремонтника\n"
 "1-го типа 1--го уровня подчинения "))
         self.button_frame_forming_enter.setText(_translate("MainWindow", "Ввести"))
-        self.button_frame_forming_next.setText(_translate("MainWindow", "следующий вид ремонта"))
+        self.button_frame_forming_next.setText(_translate("MainWindow", "Cледующий вид ремонта"))
+
         self.toolBox_2.setItemText(self.toolBox_2.indexOf(self.page_Forming), _translate("MainWindow", "Стоимость формирования"))
         self.L_submission.setText(_translate("MainWindow", "РП 1-го типа"))
         self.L_number_repair_evacuation.setText(_translate("MainWindow", "Количество ремонтно-эвак\n"
-"средств 1-го типа в РО\n"
+"средств 2-го типа в РО\n"
 "1-го уровня"))
         self.L_cost_repair_evacuation.setText(_translate("MainWindow", "Стоимость ремонтно-эвак\n"
-"средств 1-го типа"))
+"средств 2-го типа"))
         self.Enter_number_repair_evacuation_2.setText(_translate("MainWindow", "следующий уровень/тип"))
         self.button_evacuation_next.setText(_translate("MainWindow", "Следующий тип средств"))
-        self.toolBox_2.setItemText(self.toolBox_2.indexOf(self.page_repair_evacuation), _translate("MainWindow", "ремонтно-эвакуационные работы"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_forming), _translate("MainWindow", "стоимость формирования РО"))
+        self.toolBox_2.setItemText(self.toolBox_2.indexOf(self.page_repair_evacuation), _translate("MainWindow", "Ремонтно-эвакуационные работы"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_forming), _translate("MainWindow", "Стоимость формирования РО"))
         self.L_frame_belt_work_T.setText(_translate("MainWindow", "T_рем 1-го уровня 1-го типа"))
         self.L_frame_belt_work_C_repair.setText(_translate("MainWindow", "Средняя стоимость часа функционирования\n"
 "ремонтного подразделения 1-го типа"))
         self.button_frame_belt_work.setText(_translate("MainWindow", "Ввести"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_repair), _translate("MainWindow", "стоимость выполняемых ремонтных работ"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_repair), _translate("MainWindow", "Стоимость выполняемых ремонтных работ"))
         self.label_cost_kilometer.setText(_translate("MainWindow", "Стоимость 1 км перещения РПМТ\n"
 " 1-й заявке"))
         self.label_moving_distance.setText(_translate("MainWindow", "Расстояние между РО 1-го уровня,\n"
@@ -445,7 +525,7 @@ class Ui_frame_input(object):
 " 1-й заявке"))
         self.button_moving_enter.setText(_translate("MainWindow", "Следующий уровень\n"
 "(ввести уровень)"))
-        self.button_moving_next.setText(_translate("MainWindow", "следующая заявка\n"
+        self.button_moving_next.setText(_translate("MainWindow", "Следующая заявка\n"
 ""))
         self.qtool_box_2.setItemText(self.qtool_box_2.indexOf(self.page_distance_2), _translate("MainWindow", "Стоимсоть пермещения РПМТ в ходе выполнения ремонта в полевых условиях"))
         self.L_distance_transportation_km.setText(_translate("MainWindow", "Расстояние между РО 1-го уровня,\n"
@@ -454,15 +534,321 @@ class Ui_frame_input(object):
         self.L_cost_transportation_km.setText(_translate("MainWindow", "Стоимость одного км транспортировки\n"
 "образца средства АТО в РПСТ РО\n"
 "1-го уровня по 1-й заявке "))
-        self.L_number_transport.setText(_translate("MainWindow", "количество образцов средств АТО,\n"
+        self.L_number_transport.setText(_translate("MainWindow", "Количество образцов средств АТО,\n"
 "направляемых для ремонта в РПСТ\n"
 "РО 1-го уровня по 1-й заявке"))
         self.button_frame_moving_enter.setText(_translate("MainWindow", "Следующий уровень\n"
 "(ввести уровень)"))
-        self.button_frame_moving_next.setText(_translate("MainWindow", "следующая заявка\n"
+        self.button_frame_moving_enter.clicked.connect(lambda: self.FrameMoving_enter())
+        self.button_frame_moving_next.setText(_translate("MainWindow", "Следующая заявка\n"
 ""))
         self.qtool_box_2.setItemText(self.qtool_box_2.indexOf(self.page_transportation), _translate("MainWindow", "Стоимость транспортировки образцов средств АТО"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_transportation), _translate("MainWindow", "стоимость транспортировки образцов средств АТО и ремонтных органов"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_transportation), _translate("MainWindow", "Стоимость транспортировки образцов средств АТО и ремонтных органов"))
+        self.qtool_box_2.setItemText(self.qtool_box_2.indexOf(self.page_transportation),
+                                     _translate("MainWindow", "Стоимость транспортировки образцов средств АТО"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_cost_transportation), _translate("MainWindow",
+                                                                                                 "Стоимость транспортировки образцов средств АТО и ремонтных органов"))
+        self.label.setText(_translate("MainWindow", "результат:"))
+        self.result_calculation.setText(_translate("MainWindow", "Рассчитать"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.result), _translate("MainWindow", "Расчет"))
+
+    def clear_enter_frame_B(self):
+        self.frame_B_B_enter.clear()
+
+    def entr_frame_B(self):
+        result = self.frame_B_B_enter.text()
+        self.clear_enter_frame_B()
+        if self.index_V_frame_B == 1:
+            try:
+                self.B.append(float(result))
+            except ValueError:
+                print("error")  # ошибка
+            self.index_V_frame_B = 2
+        elif self.index_V_frame_B == 2:
+            try:
+                self.B.append(float(result))
+            except ValueError:
+                print("error")  # ошибка
+            calculation.add_B_RP(self.B)
+            self.B = []
+            self.index_V_frame_B = 1
+            self.level_V_frame_B += 1
+        self.L_B.setText('B ' + str(self.level_V_frame_B) + '-уровня ' + str(self.index_V_frame_B) + '-го типа')
+        #self.master.refresh()
+
+
+    def result_calculation_enter(self):
+        result = calculation.calculation()
+        self.label.setText("Результат: " + str(result))
+
+    def clear_belt_work(self):
+        self.Entry_belt_work_T.clear()
+        self.Entry_belt_work_C_repair.clear()
+    def Belt_Work(self):
+        element_T_work = self.Entry_belt_work_T.text()
+        element_C_repair = self.Entry_belt_work_C_repair.text()
+        self.clear_belt_work()
+        if self.index_repair_work_frame_beltwork == 1:
+            #print(self.T_work)
+            try:
+                self.T_work.append(float(element_T_work))
+                self.C_work_repair.append(float(element_C_repair))
+            except ValueError:
+                print('entr_frame_belt_work')
+            self.index_repair_work_frame_beltwork = 2
+        elif self.index_repair_work_frame_beltwork == 2:
+            try:
+                self.T_work.append(float(element_T_work))
+                self.C_work_repair.append(float(element_C_repair))
+            except ValueError:
+                print('entr_frame_belt_work')
+            calculation.add_T_work(self.T_work)
+            calculation.add_hour_operation(self.C_work_repair)
+            self.index_repair_work_frame_beltwork = 1
+            self.level_repair_work_frame_beltwork += 1
+            self.T_work = []
+            self.C_work_repair = []
+        self.L_frame_belt_work_C_repair.setText(
+            'Средняя стоимость часа функционирования\nремонтного подразделения'
+                 ' ' + str(self.index_repair_work_frame_beltwork) + '-го типа')
+        self.L_frame_belt_work_T.setText(
+            'T_рем ' + str(self.level_repair_work_frame_beltwork) + '-уровня ' + str(
+                self.index_repair_work_frame_beltwork) + ''
+                                            '-го типа')
+
+    def clear_line_forming(self):
+        self.Enter_number_repair_tools.clear()
+        self.Enter_cost_repair_facilities.clear()
+        self.Enter_number_repairmen.clear()
+        self.Enter_cost_preparation.clear()
+    def next_frame_forming(self):
+        element_number_repair_tools = self.Enter_number_repair_tools.text()
+        element_cost_repair_facilities = self.Enter_cost_repair_facilities.text()
+        element_number_repairmen = self.Enter_number_repairmen.text()
+        element_cost_preparation = self.Enter_cost_preparation.text()
+        self.clear_line_forming()
+        try:
+            self.number_repair_tools.append(float(element_number_repair_tools))
+            self.cost_repair_facilities.append(float(element_cost_repair_facilities))
+            self.number_repairmen.append(float(element_number_repairmen))
+            self.cost_preparation.append(float(element_cost_preparation))
+        except ValueError:
+            print('ошибка forming_next')
+        self.type_RP_frane_forming += 1
+        self.L_number_repair_tools.setText('количество средств ремонта' + str(
+            self.type_RP_frane_forming) + '-го типа\nв РП ' + str(self.type_V_frane_forming) + '-го типа ' + str(
+            self.level_frane_forming) + '-го уровня подчинения')
+        self.L_cost_repair_facilities.setText('стоимость средств ремонта ' + str(
+            self.type_RP_frane_forming) + '-го типа\nв РП ' + str(self.type_V_frane_forming) + '-го типа')
+        self.L_number_repairmen.setText(
+            'количество ремонтников в РП ' + str(self.type_V_frane_forming) + '-го типа\n' + str(
+                self.level_frane_forming) + '-го уровня подчинения')
+        self.L_cost_preparation.setText('усреднённая стоимость подготовки\nспециалиста-ремонтника\n' + str(
+            self.type_V_frane_forming) + '-го типа ' + str(
+            self.level_frane_forming) + '-го уровня подчинения')
+    def enter_frame_forming(self):
+        element_number_repair_tools = self.Enter_number_repair_tools.text()
+        element_cost_repair_facilities = self.Enter_cost_repair_facilities.text()
+        element_number_repairmen = self.Enter_number_repairmen.text()
+        element_cost_preparation = self.Enter_cost_preparation.text()
+        self.clear_line_forming()
+        try:
+            self.number_repair_tools.append(float(element_number_repair_tools))
+            self.cost_repair_facilities.append(float(element_cost_repair_facilities))
+            self.number_repairmen.append(float(element_number_repairmen))
+            self.cost_preparation.append(float(element_cost_preparation))
+            self.number_repairmen_v.append(self.number_repairmen)
+            self.cost_repair_facilities_v.append(self.cost_repair_facilities)
+            self.number_repair_tools_v.append(self.number_repair_tools)
+            self.cost_preparation_v.append(self.cost_preparation)
+        except ValueError:
+            print('ошибка forming_enter')
+        if self.type_V_frane_forming == 1:
+            self.type_V_frane_forming = 2
+        elif self.type_V_frane_forming == 2:
+            self.type_V_frane_forming = 1
+            self.level_frane_forming += 1
+            #print(self.number_repair_tools_v)
+            calculation.add_number_repair_tools(self.number_repair_tools_v)
+            calculation.add_cost_repair_tools(self.cost_repair_facilities_v)
+            calculation.add_number_repairmen(self.number_repairmen_v)
+            calculation.add_cost_repairmen(self.cost_preparation_v)
+            self.number_repair_tools_v = []
+            self.cost_repair_facilities_v = []
+            self.number_repairmen_v = []
+            self.cost_preparation_v = []
+        self.number_repair_tools = []
+        self.cost_repair_facilities = []
+        self.number_repairmen = []
+        self.cost_preparation = []
+
+        self.type_RP_frane_forming = 1
+        self.L_number_repair_tools.setText('количество средств ремонта' + str(
+            self.type_RP_frane_forming) + '-го типа\nв РП ' + str(self.type_V_frane_forming) + '-го типа ' + str(
+            self.level_frane_forming) + '-го уровня подчинения')
+        self.L_cost_repair_facilities.setText('стоимость средств ремонта ' + str(
+            self.type_RP_frane_forming) + '-го типа\nв РП ' + str(self.type_V_frane_forming) + '-го типа')
+        self.L_number_repairmen.setText(
+            'количество ремонтников в РП ' + str(self.type_V_frane_forming) + '-го типа\n' + str(
+                self.level_frane_forming) + '-го уровня подчинения')
+        self.L_cost_preparation.setText('усреднённая стоимость подготовки\nспециалиста-ремонтника\n' + str(
+            self.type_V_frane_forming) + '-го типа ' + str(
+            self.level_frane_forming) + '-го уровня подчинения')
+
+    def evacuation_line_clear(self):
+        self.Enter_number_repair_evacuation.clear()
+        self.Enter_cost_repair_evacuation.clear()
+    def evacuation_enter(self):
+        element_number_repair_evacuation = self.Enter_number_repair_evacuation.text()
+        element_cost_repair_evacuation = self.Enter_cost_repair_evacuation.text()
+        self.evacuation_line_clear()
+        try:
+            self.number_repair_evacuation.append(float(element_number_repair_evacuation))
+            self.cost_repair_evacuation.append(float(element_cost_repair_evacuation))
+        except ValueError:
+            print('error repair_evacuation_next')
+
+        self.number_repair_evacuation_v.append(self.number_repair_evacuation)
+        self.cost_repair_evacuation_v.append((self.cost_repair_evacuation))
+        if self.type_repair_evacuation == 1:
+            self.type_repair_evacuation = 2
+
+        elif self.type_repair_evacuation == 2:
+            self.type_repair_evacuation = 1
+            self.level_repair_evacuation += 1
+            calculation.add_number_repair_and_evacuation_facilities(self.number_repair_evacuation_v)
+            calculation.add_cost_repair_and_evacuation_facilities(self.cost_repair_evacuation_v)
+            self.number_repair_evacuation_v = []
+            self.cost_repair_evacuation_v = []
+        self.number_repair_evacuation = []
+        self.cost_repair_evacuation = []
+        self.tool = 2
+        self.L_submission.setText('РП ' + str(self.type_repair_evacuation) + '-го типа')
+        self.L_number_repair_evacuation.setText(
+            'Количество ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа в РО\n' + str(
+                self.level_repair_evacuation) + '-го уровня')
+        self.L_cost_repair_evacuation.setText('Стоимость ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа')
+
+    def evacuation_next(self):
+        element_number_repair_evacuation = self.Enter_number_repair_evacuation.text()
+        element_cost_repair_evacuation = self.Enter_cost_repair_evacuation.text()
+        self.evacuation_line_clear()
+        try:
+            self.number_repair_evacuation.append(float(element_number_repair_evacuation))
+            self.cost_repair_evacuation.append(float(element_cost_repair_evacuation))
+        except ValueError:
+            print('error repair_evacuation_next')
+
+        self.tool += 1
+        self.L_number_repair_evacuation.setText(
+            'Количество ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа в РО\n' + str(
+                self.level_repair_evacuation) + '-го уровня')
+        self.L_cost_repair_evacuation.setText('Стоимость ремонтно-эвак\nсредств ' + str(self.tool) + '-го типа')
+
+    def clear_line_moving(self):
+        self.enter_cost_kilometer.clear()
+        self.enter_moving_distance.clear()
+    def moving_next_clcik(self):
+        element_cost_kilometer = self.enter_cost_kilometer.text()
+        element_distance = self.enter_moving_distance.text()
+        self.clear_line_moving()
+
+        try:
+            self.cost_kilometer.append(float(element_cost_kilometer))
+            self.distance_transport.append((float(element_distance)))
+
+        except ValueError:
+            print('Ошибка ввода в moving next')
+
+        self.application_moving_distance += 1
+        self.label_cost_kilometer.setText('Стоимость 1 км перещения РПМТ\n' + str(self.level_moving_distance) + '-го уровня по ' + str(
+                self.application_moving_distance) + '-й заявке')
+        self.label_moving_distance.setText('Расстояние между РО\n' + str(self.level_moving_distance) + '-го уровня по ' + str(
+                self.application_moving_distance) + '-й заявке')
+
+    def cost_kilometer_enter(self):
+        element_cost_kilometer = self.enter_cost_kilometer.text()
+        element_distance = self.enter_moving_distance.text()
+        self.clear_line_moving()
+        #print(float(element_cost_kilometer))
+        try:
+            self.cost_kilometer.append(float(element_cost_kilometer))
+            self.distance_transport.append((float(element_distance)))
+
+        except ValueError:
+            print('Ошибка ввода в moving next')
+
+        calculation.add_km_travel(self.cost_kilometer)
+        calculation.add_distance(self.distance_transport)
+
+        self.level_moving_distance += 1
+        self.label_cost_kilometer.setText('Стоимость 1 км перещения'
+                                          ' РПМТ\n' + str(self.level_moving_distance) + '-го уровня '
+                                                                                        ',\nпройденное РПМТ'
+                                                                                        ' в ходе выполнения\n'
+                                                                                        'ремонта в полевых'
+                                                                                        ' условиях по\n' + str(
+                self.application_moving_distance) + '-й заявке')
+        self.label_moving_distance.setText('Расстояние между РО\n' + str(self.level_moving_distance) + '-го уровня по ' + str(
+                self.application_moving_distance) + '-й заявке')
+
+        self.cost_kilometer = []
+        self.distance_transport = []
+    def moving_next(self):
+
+        element_distance_transportation_km = self.Entry_distance_transportation_km.text()
+        element_cost_transportation_km = self.Entry_cost_transportation_km.text()
+        element_number_transport = self.Entry_number_transport.text()
+        self.clear_line()
+        try:
+            self.distance_transportation_km.append(float(element_distance_transportation_km))
+            self.cost_transportation_km.append(float(element_cost_transportation_km))
+            self.number_transport.append((float(element_number_transport)))
+        except ValueError:
+
+            print('Ошибка ввода в moving next')
+        self.application_moving += 1
+        self.L_distance_transportation_km.setText('Расстояние между РО ' + str(
+                self.level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(
+                self.application_moving) + '-й заяке')
+
+        self.L_cost_transportation_km.setText('Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(
+                self.level_moving) + '-го уровня по ' + str(self.application_moving) + '-й заявке')
+        self.L_number_transport.setText('количество образцов средств АТО,\nнаправляемых для ремонта в РПСТ\nРО ' + str(
+                self.level_moving) + '-го уровня по ' + str(self.application_moving) + '-й заявке')
+
+    def clear_line(self):
+        self.Entry_distance_transportation_km.clear()
+        self.Entry_cost_transportation_km.clear()
+        self.Entry_number_transport.clear()
+    def FrameMoving_enter(self):
+
+        element_distance_transportation_km = self.Entry_distance_transportation_km.text()
+        element_cost_transportation_km = self.Entry_cost_transportation_km.text()
+        element_number_transport = self.Entry_number_transport.text()
+        self.clear_line()
+        try:
+
+            self.distance_transportation_km.append(float(element_distance_transportation_km))
+            self.cost_transportation_km.append(float(element_cost_transportation_km))
+            self.number_transport.append((float(element_number_transport)))
+        except ValueError:
+            print('Ошибка ввода в moving next')
+        calculation.add_distance_transportation(self.distance_transportation_km)
+        calculation.add_cost_km_transpot(self.cost_transportation_km)
+        calculation.add_number_samples_funds(self.number_transport)
+        self.level_moving += 1
+        self.L_distance_transportation_km.setText( 'Расстояние между РО ' + str(
+                self.level_moving) + '-го уровня,\nи местонахождением объекта ремонта\nпо ' + str(
+                self.application_moving) + '-й заяке')
+        self.L_cost_transportation_km.setText('Стоимость одного км транспортировки\nобразца средства АТО в РПСТ РО\n' + str(
+                self.level_moving) + '-го уровня по ' + str(self.application_moving) + '-й заявке')
+        self.L_number_transport.setText('количество образцов средств АТО,\nнаправляемых для ремонта в РПСТ\nРО ' + str(
+                self.level_moving) + '-го уровня по ' + str(self.application_moving) + '-й заявке')
+        self.distance_transportation_km = []
+        self.cost_transportation_km = []
+        self.number_transport = []
+
 def resource_path0(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(
@@ -494,7 +880,7 @@ if __name__ == "__main__":
     ui = Ui_frame_input()
     ui.setupUi(MainWindow)
     palette = QPalette()
-    path = resource_path0("head.jpg");
+    path = resource_path0("test_3.png");
     palette.setBrush(QPalette.Background, QBrush(QPixmap(path)))
     MainWindow.setPalette(palette)
     MainWindow.show()
